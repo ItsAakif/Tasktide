@@ -1,0 +1,66 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Install Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        override: true
+    
+    - name: Build Release
+      run: cargo build --release
+    
+    - name: Create Installer
+      shell: pwsh
+      run: |
+        ./create_installer.ps1
+    
+    - name: Create Portable ZIP
+      shell: pwsh
+      run: |
+        New-Item -ItemType Directory -Force -Path dist
+        Copy-Item target/release/tasktide.exe dist/
+        Copy-Item README.md,INSTALL.txt dist/
+        Compress-Archive -Path dist/* -DestinationPath TaskTide-v${{ github.ref_name }}.zip -Force
+    
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: TaskTide ${{ github.ref_name }}
+        draft: false
+        prerelease: false
+    
+    - name: Upload Installer
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./dist/TaskTide-Setup.ps1
+        asset_name: TaskTide-Setup.ps1
+        asset_content_type: application/x-powershell
+    
+    - name: Upload Portable ZIP
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./TaskTide-v${{ github.ref_name }}.zip
+        asset_name: TaskTide-v${{ github.ref_name }}.zip
+        asset_content_type: application/zip

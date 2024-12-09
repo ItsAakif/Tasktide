@@ -1,0 +1,42 @@
+/target
+
+# Generated files
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Windows specific
+*.exe
+*.pdb
+*.dll
+*.lib
+*.exp
+
+# Build artifacts
+dist/
+*.zip
+*.msi
+*.log
+
+# Environment
+.env
+.env.local
+
+# Documentation
+doc/
+docs/generated/
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Dependencies
+vendor/
