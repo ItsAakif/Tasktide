@@ -48,7 +48,7 @@ TaskTide is a modern Windows task manager that prioritizes user experience and d
 
 ### Portable Version
 1. Download the latest portable version from the [Releases](../../releases/latest) page
-2. Extract `TaskTide-v1.3.zip` to your preferred location
+2. Extract `TaskTide-v1.0.0.zip` to your preferred location
 3. Run `tasktide.exe`
 
 > Note: If Windows SmartScreen appears, click "More info" and then "Run anyway". This happens because the application is new and not yet widely distributed.
