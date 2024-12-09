@@ -6,7 +6,7 @@ authors = ["TaskTide Contributors"]
 description = "A modern, lightweight task management solution built with Rust"
 readme = "README.md"
 license = "MIT"
-repository = "https://github.com/yourusername/tasktide"
+repository = "https://github.com/ItsAakif/Tasktide"
 keywords = ["task-manager", "process-management", "windows", "gui", "productivity"]
 categories = ["gui", "os::windows-apis"]
 
